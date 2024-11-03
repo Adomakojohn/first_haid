@@ -35,11 +35,10 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                GradientText(
+                const GradientText(
                   'Create Account',
-                  style: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.w500),
-                  gradient: const LinearGradient(
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                  gradient: LinearGradient(
                     colors: [
                       Color(0xFF01E1FE),
                       Color(0xFF1241C5),
