@@ -6,8 +6,12 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final Widget? suffixIcon;
+  final BorderRadius borderRadius;
+  final double? height;
 
   const MyTextField({
+    this.height,
+    required this.borderRadius,
     super.key,
     required this.hintText,
     required this.obscureText,
@@ -24,7 +28,7 @@ class MyTextField extends StatelessWidget {
         Text(
           textFieldName,
           style: const TextStyle(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
             fontSize: 18,
             letterSpacing: 1,
           ),
@@ -33,7 +37,7 @@ class MyTextField extends StatelessWidget {
           height: 2,
         ),
         SizedBox(
-          height: 50,
+          height: height,
           child: TextField(
             controller: controller,
             obscureText: obscureText,
@@ -46,21 +50,11 @@ class MyTextField extends StatelessWidget {
                 color: Color.fromARGB(255, 100, 98, 98),
               ),
               filled: true,
-              focusedBorder: const OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none, borderRadius: borderRadius),
+              enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    10,
-                  ),
-                ),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    10,
-                  ),
-                ),
+                borderRadius: borderRadius,
               ),
             ),
           ),

@@ -95,12 +95,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 // Email text field
                 const MyTextField(
+                  height: 50,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: 'example@gmail.com',
                   obscureText: false,
                   textFieldName: 'Email',
                 ),
                 // Password text field
                 MyTextField(
+                  height: 50,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                   hintText: '.........................',
                   obscureText: obscureText,
                   suffixIcon: IconButton(
@@ -133,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.login);
+                    Navigator.pushNamed(context, AppRoutes.setupprofile);
                   },
                   child: Container(
                     alignment: Alignment.center,
