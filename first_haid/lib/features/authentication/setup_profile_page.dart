@@ -1,6 +1,8 @@
+import 'package:first_haid/features/onboarding/onboarding.dart';
 import 'package:first_haid/features/widgets/mytextfield.dart';
 import 'package:flutter/material.dart';
 
+import '../onboarding/onboarding_mainpage.dart';
 import '../widgets/gradient_text.dart';
 
 class SetupProfilePage extends StatefulWidget {
@@ -132,7 +134,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   height: 50,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: '',
-                  obscureText: true,
+                  obscureText: false,
                   textFieldName: 'Full Name',
                 ),
               ),
@@ -147,7 +149,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: '',
                   suffixIcon: Icon(Icons.calendar_month_rounded),
-                  obscureText: true,
+                  obscureText: false,
                   textFieldName: 'Birthday',
                 ),
               ),
@@ -161,7 +163,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   height: 50,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: '',
-                  obscureText: true,
+                  obscureText: false,
                   textFieldName: 'Gender',
                 ),
               ),
@@ -175,7 +177,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   height: 65,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: '',
-                  obscureText: true,
+                  obscureText: false,
                   textFieldName: 'Medical Allergies',
                 ),
               ),
@@ -183,21 +185,30 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
             Positioned(
               bottom: screenHeight * 0.006,
               left: screenWidth * 0.632,
-              child: Container(
-                alignment: Alignment.center,
-                width: 124,
-                height: 36,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF1057CD),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OnboardingMainpage(),
+                      ));
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 124,
+                  height: 36,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF1057CD),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Next',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
