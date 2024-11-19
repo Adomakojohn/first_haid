@@ -1,19 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'package:first_haid/features/widgets/next_button.dart';
 
 import '../widgets/gradient_text.dart';
 
-class OnboardingPage extends StatefulWidget {
+class OnboardPageFour extends StatefulWidget {
   final String onboardImage;
   final String onboardMainText;
   final String onboardSecondText;
   final String onboardThirdText;
   final String onboardFourthText;
   final String onboardFifthText;
-  const OnboardingPage({
+  const OnboardPageFour({
     super.key,
     required this.onboardImage,
     required this.onboardMainText,
@@ -24,15 +20,27 @@ class OnboardingPage extends StatefulWidget {
   });
 
   @override
-  State<OnboardingPage> createState() => _OnboardingPageState();
+  State<OnboardPageFour> createState() => _OnboardPageFourState();
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardPageFourState extends State<OnboardPageFour> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
+          Container(
+            height: 110,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    end: Alignment.bottomCenter,
+                    begin: Alignment.topCenter,
+                    colors: [
+                  Color(0xFFC3E0F2),
+                  Color(0xFFFFFFFF),
+                ])),
+          ),
           Image(
             image: AssetImage(widget.onboardImage),
           ),

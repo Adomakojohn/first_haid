@@ -1,5 +1,5 @@
-import 'package:first_haid/features/onboarding/onboarding.dart';
 import 'package:first_haid/features/widgets/mytextfield.dart';
+import 'package:first_haid/features/widgets/setup_profile_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../onboarding/onboarding_mainpage.dart';
@@ -19,16 +19,14 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         top: true,
-        child: Stack(
-          children: [
-            Positioned(
-              top: screenWidth * 0.01,
-              bottom: screenHeight * 0.02,
-              left: screenWidth * 0.3,
-              child: const Text(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
                 'Create Account',
                 style: TextStyle(
                   color: Color(0xFF01E1FE),
@@ -39,11 +37,10 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   letterSpacing: -1.20,
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.065,
-              left: screenWidth * 0.18,
-              child: const GradientText(
+              SizedBox(
+                height: screenHeight * 0.0207,
+              ),
+              const GradientText(
                 'Set Up Profile',
                 style: TextStyle(fontSize: 38, fontWeight: FontWeight.w400),
                 gradient: LinearGradient(
@@ -53,67 +50,16 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.146,
-              left: screenWidth * 0.25,
-              child: Container(
-                width: screenWidth * 0.5,
-                height: screenWidth * 0.5,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: SweepGradient(
-                    colors: [
-                      Color(0xFF1241C5),
-                      Color(0xFF01E1FE),
-                      Color(0xFF1241C5),
-                    ],
-                    startAngle: 0.14,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/profile-user.png',
-                      height: screenWidth * 0.48,
-                      width: screenWidth * 0.48,
-                      color: Colors.blue.withOpacity(0.3),
-                      colorBlendMode: BlendMode.color,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: screenHeight * 0.0507,
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.336,
-              left: screenWidth * 0.65,
-              child: Container(
-                width: 30.29,
-                height: 30.29,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(1),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/icons/Ellipse.png',
-                      height: screenWidth * 0.048,
-                      width: screenWidth * 0.048,
-                      color: Colors.white.withOpacity(0.3),
-                      colorBlendMode: BlendMode.color,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+              Container(
+                alignment: Alignment.center,
+                height: screenHeight * 0.25,
+                width: 300,
+                child: const SetupProfileWidget(),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.405,
-              left: screenHeight * 0.16,
-              child: const Text(
+              const Text(
                 'Add Profile Picture',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -124,11 +70,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   letterSpacing: -0.24,
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.435,
-              left: screenHeight * 0.031,
-              child: SizedBox(
+              SizedBox(
                 width: screenWidth * 0.9,
                 child: const MyTextField(
                   height: 50,
@@ -138,11 +80,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   textFieldName: 'Full Name',
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.535,
-              left: screenHeight * 0.031,
-              child: SizedBox(
+              SizedBox(
                 width: screenWidth * 0.9,
                 child: const MyTextField(
                   height: 50,
@@ -153,11 +91,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   textFieldName: 'Birthday',
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.635,
-              left: screenHeight * 0.031,
-              child: SizedBox(
+              SizedBox(
                 width: screenWidth * 0.9,
                 child: const MyTextField(
                   height: 50,
@@ -167,11 +101,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   textFieldName: 'Gender',
                 ),
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.735,
-              left: screenHeight * 0.031,
-              child: SizedBox(
+              SizedBox(
                 width: screenWidth * 0.9,
                 child: const MyTextField(
                   height: 65,
@@ -181,50 +111,58 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   textFieldName: 'Medical Allergies',
                 ),
               ),
-            ),
-            Positioned(
-              bottom: screenHeight * 0.006,
-              left: screenWidth * 0.632,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const OnboardingMainpage(),
-                      ));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 124,
-                  height: 36,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF1057CD),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
+              SizedBox(
+                height: screenHeight * 0.0407,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: screenWidth * 0.0551,
                   ),
-                  child: const Text(
-                    'Next',
+                  const Text(
+                    'Skip',
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white,
+                      color: Color(0xFF01E1FE),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    width: screenWidth * 0.479,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OnboardingMainpage(),
+                          ));
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 124,
+                      height: 36,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF1057CD),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      child: const Text(
+                        'Next',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Positioned(
-              bottom: screenHeight * 0.016,
-              left: screenWidth * 0.132,
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF01E1FE),
-                ),
+              SizedBox(
+                height: screenHeight * 0.0187,
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
