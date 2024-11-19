@@ -1,5 +1,8 @@
-import 'package:first_haid/features/authentication/login_page.dart';
+// lib/main.dart
 import 'package:flutter/material.dart';
+
+import 'routes/app_routes.dart';
+import 'routes/routes_generator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,11 +11,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginPage(),
+      title: 'First Haid App',
+      initialRoute: AppRoutes.signuppage,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.2
+  flutter_screenutil: ^5.9.3
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/logos/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -90,9 +93,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
-  color: "#FFFFFF"               # Background color for light mode
-  color_dark: "#0A0A0A"          # Background color for dark mode
-  image: assets/logos/first_haid_logo.png  # Center image (typically a brand logo)
+  color: "#FFFFFF"              
+  color_dark: "#0A0A0A"          
+  image: assets/logos/first_haid_logo.png  
   
-  android: true                  # Enable for Android
-  ios: true                      # Enable for iOS
+  android: true                  
+  ios: true                      
