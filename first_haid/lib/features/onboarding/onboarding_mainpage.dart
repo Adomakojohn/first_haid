@@ -69,41 +69,39 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
     return Scaffold(
       body: Stack(
         children: [
-          Expanded(
-            child: SizedBox(
-              height: 900,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: onboard.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    onLastPage = (index == 4);
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return (index == 3 || index == 4)
-                      ? OnboardFivePage(
-                          onboardFifthText: onboard[index].onboardFifthText,
-                          onboardFourthText: onboard[index].onboardFourthText,
-                          onboardImage: onboard[index].onboardImage,
-                          onboardMainText: onboard[index].onboardMainText,
-                          onboardSecondText: onboard[index].onboardSecondText,
-                          onboardThirdText: onboard[index].onboardThirdText,
-                        )
-                      : OnboardingPage(
-                          onboardFifthText: onboard[index].onboardFifthText,
-                          onboardFourthText: onboard[index].onboardFourthText,
-                          onboardImage: onboard[index].onboardImage,
-                          onboardMainText: onboard[index].onboardMainText,
-                          onboardSecondText: onboard[index].onboardSecondText,
-                          onboardThirdText: onboard[index].onboardThirdText,
-                        );
-                },
-              ),
+          SizedBox(
+            height: 900,
+            child: PageView.builder(
+              controller: pageController,
+              itemCount: onboard.length,
+              onPageChanged: (index) {
+                setState(() {
+                  onLastPage = (index == 4);
+                });
+              },
+              itemBuilder: (context, index) {
+                return (index == 3 || index == 4)
+                    ? OnboardFivePage(
+                        onboardFifthText: onboard[index].onboardFifthText,
+                        onboardFourthText: onboard[index].onboardFourthText,
+                        onboardImage: onboard[index].onboardImage,
+                        onboardMainText: onboard[index].onboardMainText,
+                        onboardSecondText: onboard[index].onboardSecondText,
+                        onboardThirdText: onboard[index].onboardThirdText,
+                      )
+                    : OnboardingPage(
+                        onboardFifthText: onboard[index].onboardFifthText,
+                        onboardFourthText: onboard[index].onboardFourthText,
+                        onboardImage: onboard[index].onboardImage,
+                        onboardMainText: onboard[index].onboardMainText,
+                        onboardSecondText: onboard[index].onboardSecondText,
+                        onboardThirdText: onboard[index].onboardThirdText,
+                      );
+              },
             ),
           ),
           Positioned(
-            bottom: 337,
+            bottom: screenHeight * 0.45,
             left: 155,
             child: SmoothPageIndicator(
               onDotClicked: (index) {

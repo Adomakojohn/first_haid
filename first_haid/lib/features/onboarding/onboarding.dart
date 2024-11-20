@@ -31,13 +31,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Image(
-            image: AssetImage(widget.onboardImage),
-          ),
-          Expanded(
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image(
+              image: AssetImage(widget.onboardImage),
+            ),
+            Container(
+              height: 700,
               alignment: Alignment.center,
               color: Colors.transparent,
               child: Stack(
@@ -95,9 +96,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                 ],
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

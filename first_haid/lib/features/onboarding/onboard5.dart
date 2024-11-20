@@ -28,25 +28,26 @@ class _OnboardFivePageState extends State<OnboardFivePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 132,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    end: Alignment.bottomCenter,
-                    begin: Alignment.topCenter,
-                    colors: [
-                  Color(0xFFC3E0F2),
-                  Color(0xFFFFFFFF),
-                ])),
-          ),
-          Image(
-            image: AssetImage(widget.onboardImage),
-          ),
-          Expanded(
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 132,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      end: Alignment.bottomCenter,
+                      begin: Alignment.topCenter,
+                      colors: [
+                    Color(0xFFC3E0F2),
+                    Color(0xFFFFFFFF),
+                  ])),
+            ),
+            Image(
+              image: AssetImage(widget.onboardImage),
+            ),
+            Container(
+              height: 700,
               alignment: Alignment.center,
               color: Colors.transparent,
               child: Stack(
@@ -104,9 +105,9 @@ class _OnboardFivePageState extends State<OnboardFivePage> {
                   ),
                 ],
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

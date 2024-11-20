@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
   final String hintText;
-  final String textFieldName;
+  final dynamic textFieldName;
   final bool obscureText;
   final TextEditingController? controller;
   final Widget? suffixIcon;
@@ -17,7 +17,7 @@ class MyTextField extends StatelessWidget {
     required this.obscureText,
     this.suffixIcon,
     this.controller,
-    required this.textFieldName,
+    this.textFieldName,
   });
 
   @override
