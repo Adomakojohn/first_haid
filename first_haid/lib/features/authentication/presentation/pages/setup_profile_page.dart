@@ -1,9 +1,10 @@
-import 'package:first_haid/features/widgets/mytextfield.dart';
-import 'package:first_haid/features/widgets/setup_profile_widget.dart';
+import 'package:first_haid/core/widgets/mytextfield.dart';
+import 'package:first_haid/core/widgets/setup_profile_widget.dart';
+import 'package:multi_masked_formatter/multi_masked_formatter.dart';
 import 'package:flutter/material.dart';
 
-import '../onboarding/onboarding_mainpage.dart';
-import '../widgets/gradient_text.dart';
+import '../../../onboarding/onboarding_mainpage.dart';
+import '../../../../core/widgets/gradient_text.dart';
 
 class SetupProfilePage extends StatefulWidget {
   const SetupProfilePage({super.key});
@@ -82,11 +83,18 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
               ),
               SizedBox(
                 width: screenWidth * 0.9,
-                child: const MyTextField(
+                child: MyTextField(
                   height: 50,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  hintText: '',
-                  suffixIcon: Icon(Icons.calendar_month_rounded),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  inputFormatters: [
+                    MultiMaskedTextInputFormatter(
+                      masks: ['xxxx.xx.xx'],
+                      separator: '.',
+                    )
+                  ],
+                  hintText: '1998.01.25',
+                  keyboardType: TextInputType.number,
+                  suffixIcon: const Icon(Icons.calendar_month_rounded),
                   obscureText: false,
                   textFieldName: 'Birthday',
                 ),

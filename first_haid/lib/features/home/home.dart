@@ -1,5 +1,8 @@
-import 'package:first_haid/features/widgets/bot_container.dart';
-import 'package:first_haid/features/widgets/gradient_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_haid/core/routes/app_routes.dart';
+import 'package:first_haid/core/widgets/bot_container.dart';
+import 'package:first_haid/core/widgets/gradient_text.dart';
+import 'package:first_haid/features/authentication/data/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AuthService authService = AuthService();
+
+  void logout() async {
+    AuthService authService = AuthService();
+    await authService.signOut();
+    Navigator.pushReplacementNamed(context, AppRoutes.login);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(
-                    width: 85,
+                    width: 15,
                   ),
                   const GradientText(
                     'Welcome, Kofi',
@@ -66,11 +77,20 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 13,
               ),
-              /* Container(
+              Container(
                 color: Colors.green,
                 height: 245,
                 width: double.infinity,
-              ),  */
+                child: GestureDetector(
+                  onTap: logout,
+                  child: const Text(
+                    "Sign out",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

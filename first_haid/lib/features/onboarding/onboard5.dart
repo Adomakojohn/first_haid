@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import '../widgets/gradient_text.dart';
+import '../../core/widgets/gradient_text.dart';
 
 class OnboardFivePage extends StatefulWidget {
   final String onboardImage;

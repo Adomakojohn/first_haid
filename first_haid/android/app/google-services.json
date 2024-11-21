@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933102750137",
+    "project_id": "first-haid",
+    "storage_bucket": "first-haid.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933102750137:android:de29324dc24fa60b6e0e68",
+        "android_client_info": {
+          "package_name": "com.dbn.first_haid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXrsbnocyQizrK6rHVnqpTOPAnG8L1dmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

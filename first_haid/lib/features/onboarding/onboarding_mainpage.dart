@@ -4,8 +4,8 @@ import 'package:first_haid/features/onboarding/onboardpage4.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../routes/app_routes.dart';
-import '../widgets/next_button.dart';
+import '../../core/routes/app_routes.dart';
+import '../../core/widgets/next_button.dart';
 
 class OnboardingMainpage extends StatefulWidget {
   const OnboardingMainpage({super.key});
@@ -127,7 +127,8 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
             child: onLastPage
                 ? NextButton(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, AppRoutes.home);
+                      Navigator.pushReplacementNamed(
+                          context, AppRoutes.authrepository);
                     },
                   )
                 : NextButton(

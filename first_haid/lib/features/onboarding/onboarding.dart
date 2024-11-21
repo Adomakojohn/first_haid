@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'package:first_haid/features/widgets/next_button.dart';
+import 'package:first_haid/core/widgets/next_button.dart';
 
-import '../widgets/gradient_text.dart';
+import '../../core/widgets/gradient_text.dart';
 
 class OnboardingPage extends StatefulWidget {
   final String onboardImage;

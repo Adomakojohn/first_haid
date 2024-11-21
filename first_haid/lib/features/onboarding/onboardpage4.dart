@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/gradient_text.dart';
+import '../../core/widgets/gradient_text.dart';
 
 class OnboardPageFour extends StatefulWidget {
   final String onboardImage;

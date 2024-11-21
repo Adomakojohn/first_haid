@@ -1,9 +1,11 @@
-import 'package:first_haid/features/widgets/my_icon_container.dart';
-import 'package:first_haid/features/widgets/mytextfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_haid/core/widgets/my_icon_container.dart';
+import 'package:first_haid/core/widgets/mytextfield.dart';
 import 'package:flutter/material.dart';
 
-import '../../routes/app_routes.dart';
-import '../widgets/gradient_text.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/widgets/gradient_text.dart';
+import '../../data/auth_services.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -14,6 +16,97 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool obscureText = true;
+  bool isLoading = false;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  void createUser() async {
+    AuthService authService = AuthService();
+    setState(() {
+      isLoading = true;
+    });
+    if (passwordController.text != confirmPasswordController.text) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Sign Up Failed'),
+            content: const Text("Passwords don't match!"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    try {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Login Failed'),
+              content: Text("Passwords don't match !!"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+      Navigator.pop(context);
+
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
+    } catch (e) {
+      String errorMessage;
+      if (e.toString().contains('weak-password')) {
+        errorMessage = 'The password is too weak';
+      } else if (e.toString().contains('email-already-in-use')) {
+        errorMessage = 'The account already exists for that email.';
+      } else {
+        errorMessage = e.toString();
+      }
+
+      //error dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +187,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: screenHeight * 0.02,
                 ),
                 // Email text field
-                const MyTextField(
+                MyTextField(
+                  controller: emailController,
                   height: 50,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   hintText: 'example@gmail.com',
@@ -103,6 +197,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 // Password text field
                 MyTextField(
+                  controller: passwordController,
                   height: 50,
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   hintText: '.........................',
@@ -121,24 +216,31 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   textFieldName: 'Password',
                 ),
-                /* const Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF1246C7),
+                MyTextField(
+                  controller: confirmPasswordController,
+                  height: 50,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  hintText: '.........................',
+                  obscureText: obscureText,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                    icon: Icon(
+                      obscureText
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
                     ),
                   ),
-                ),  */
+                  textFieldName: 'Confirm Password',
+                ),
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.setupprofile);
-                  },
+                  onTap: createUser,
                   child: Container(
                     alignment: Alignment.center,
                     height: 47,
@@ -194,22 +296,26 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Have an account already? ",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      'Log In',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Color(0xFF1246C7),
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoutes.login),
+                      child: const Text(
+                        'Log In',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color(0xFF1246C7),
+                        ),
                       ),
                     ),
                   ],

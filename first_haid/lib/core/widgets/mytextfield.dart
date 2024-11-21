@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyTextField extends StatelessWidget {
   final String hintText;
@@ -7,10 +8,14 @@ class MyTextField extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final BorderRadius borderRadius;
+  final TextInputType? keyboardType;
   final double? height;
+  final List<TextInputFormatter>? inputFormatters;
 
   const MyTextField({
     this.height,
+    this.inputFormatters,
+    this.keyboardType,
     required this.borderRadius,
     super.key,
     required this.hintText,
@@ -39,6 +44,8 @@ class MyTextField extends StatelessWidget {
         SizedBox(
           height: height,
           child: TextField(
+            inputFormatters: inputFormatters,
+            keyboardType: keyboardType,
             controller: controller,
             obscureText: obscureText,
             decoration: InputDecoration(
