@@ -61,7 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
           builder: (context) {
             return AlertDialog(
               title: const Text('Login Failed'),
-              content: Text("Passwords don't match !!"),
+              content: const Text("Passwords don't match !!"),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
@@ -74,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
       }
       Navigator.pop(context);
 
-      Navigator.pushReplacementNamed(context, AppRoutes.home);
+      Navigator.pushReplacementNamed(context, AppRoutes.setupprofile);
     } catch (e) {
       String errorMessage;
       if (e.toString().contains('weak-password')) {
@@ -191,7 +191,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   MyTextField(
                     controller: emailController,
                     height: 50,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     hintText: 'example@gmail.com',
                     obscureText: false,
                     textFieldName: 'Email',
@@ -321,23 +321,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: screenHeight * 0.011,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 6),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Color(0xFFBCB9B9),
-                        fontSize: 18,
-                        fontFamily: 'Proxima Nova',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                        letterSpacing: -0.48,
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

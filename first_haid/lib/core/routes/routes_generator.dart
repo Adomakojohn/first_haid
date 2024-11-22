@@ -2,7 +2,8 @@ import 'package:first_haid/features/authentication/domain/auth_repository.dart';
 import 'package:first_haid/features/authentication/presentation/pages/login_page.dart';
 import 'package:first_haid/features/authentication/presentation/pages/setup_profile_page.dart';
 import 'package:first_haid/features/authentication/presentation/pages/sign_up_page.dart';
-import 'package:first_haid/features/home/home.dart';
+import 'package:first_haid/features/home/pages/bottom_nav_bar_page.dart';
+import 'package:first_haid/features/home/pages/home.dart';
 import 'package:first_haid/features/onboarding/onboarding_mainpage.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AuthRepository());
       case AppRoutes.onboardingmainpage:
         return MaterialPageRoute(builder: (_) => const OnboardingMainpage());
+      case AppRoutes.bottomnavbarpage:
+        return MaterialPageRoute(builder: (_) => const BottomNavBarPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

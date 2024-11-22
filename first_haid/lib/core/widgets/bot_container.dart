@@ -1,4 +1,5 @@
 import 'package:first_haid/core/widgets/mytextfield.dart';
+import 'package:first_haid/features/chat/presentation/pages/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class BotContainer extends StatelessWidget {
@@ -58,7 +59,13 @@ class BotContainer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(17),
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ChatPage();
+                      },
+                    ));
+                  },
                   icon: const Icon(Icons.send),
                 ),
               ),

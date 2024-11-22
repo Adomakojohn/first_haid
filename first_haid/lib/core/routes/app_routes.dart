@@ -5,5 +5,6 @@ class AppRoutes {
   static const String signuppage = '/signuppage';
   static const String authrepository = '/authrepository';
   static const String onboardingmainpage = '/onboardingmainpage';
+  static const String bottomnavbarpage = '/bottomnavbarpage';
   // Add more routes as needed
 }

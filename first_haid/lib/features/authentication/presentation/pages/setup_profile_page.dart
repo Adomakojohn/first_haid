@@ -1,9 +1,9 @@
+import 'package:first_haid/core/routes/app_routes.dart';
 import 'package:first_haid/core/widgets/mytextfield.dart';
 import 'package:first_haid/core/widgets/setup_profile_widget.dart';
 import 'package:multi_masked_formatter/multi_masked_formatter.dart';
 import 'package:flutter/material.dart';
 
-import '../../../onboarding/onboarding_mainpage.dart';
 import '../../../../core/widgets/gradient_text.dart';
 
 class SetupProfilePage extends StatefulWidget {
@@ -139,11 +139,8 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OnboardingMainpage(),
-                          ));
+                      Navigator.pushReplacementNamed(
+                          context, AppRoutes.bottomnavbarpage);
                     },
                     child: Container(
                       alignment: Alignment.center,

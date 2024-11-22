@@ -1,6 +1,5 @@
 import 'package:first_haid/features/onboarding/onboard5.dart';
 import 'package:first_haid/features/onboarding/onboarding.dart';
-import 'package:first_haid/features/onboarding/onboardpage4.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -101,7 +100,7 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.45,
+            bottom: screenHeight * 0.42,
             left: 155,
             child: SmoothPageIndicator(
               onDotClicked: (index) {

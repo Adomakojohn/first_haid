@@ -45,13 +45,5 @@ class AuthService {
     }
   }
 
-  // Get the current user
-  User? getCurrentUser() {
-    try {
-      return _firebaseAuth.currentUser;
-    } catch (e) {
-      print("Error retrieving current user: $e");
-      return null;
-    }
-  }
+  //add user details
 }

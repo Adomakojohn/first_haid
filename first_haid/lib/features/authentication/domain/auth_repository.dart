@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:first_haid/core/routes/app_routes.dart';
 import 'package:first_haid/features/authentication/presentation/pages/login_page.dart';
-import 'package:first_haid/features/authentication/presentation/pages/sign_up_page.dart';
-import 'package:first_haid/features/home/home.dart';
+import 'package:first_haid/features/home/pages/bottom_nav_bar_page.dart';
+
 import 'package:flutter/material.dart';
 
 class AuthRepository extends StatelessWidget {
@@ -16,7 +14,7 @@ class AuthRepository extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const BottomNavBarPage();
           } else {
             return const LoginPage();
           }

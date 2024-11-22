@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'package:first_haid/core/widgets/next_button.dart';
 
 import '../../core/widgets/gradient_text.dart';
 
@@ -32,6 +29,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Image(
@@ -54,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   //),
                   Positioned(
                     top: 85,
-                    left: 32,
+                    left: 22,
                     child: Column(
                       children: [
                         GradientText(

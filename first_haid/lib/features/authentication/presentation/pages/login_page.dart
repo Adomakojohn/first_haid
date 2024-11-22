@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (FirebaseAuth.instance.currentUser != null) {
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
+        Navigator.pushReplacementNamed(context, AppRoutes.bottomnavbarpage);
       } else {
         throw Exception('Failed to log in. User is null.');
       }
@@ -258,23 +258,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.011,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 6),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Color(0xFFBCB9B9),
-                        fontSize: 18,
-                        fontFamily: 'Proxima Nova',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                        letterSpacing: -0.48,
-                      ),
-                    ),
                   ),
                 ],
               ),

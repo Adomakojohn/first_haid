@@ -29,6 +29,7 @@ class _OnboardFivePageState extends State<OnboardFivePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -63,7 +64,7 @@ class _OnboardFivePageState extends State<OnboardFivePage> {
                   //),
                   Positioned(
                     top: 85,
-                    left: 32,
+                    left: 22,
                     child: Column(
                       children: [
                         GradientText(
