@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,47 +41,47 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB-g9u-KaaXd82CjaT8zDZ_hoSnnGdCef8',
-    appId: '1:933102750137:web:25e0b4502889b5706e0e68',
-    messagingSenderId: '933102750137',
-    projectId: 'first-haid',
-    authDomain: 'first-haid.firebaseapp.com',
-    storageBucket: 'first-haid.firebasestorage.app',
-  );
+  static FirebaseOptions get web => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY_WEB']!,
+        appId: '1:933102750137:web:25e0b4502889b5706e0e68',
+        messagingSenderId: '933102750137',
+        projectId: 'first-haid',
+        authDomain: 'first-haid.firebaseapp.com',
+        storageBucket: 'first-haid.firebasestorage.app',
+      );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBXrsbnocyQizrK6rHVnqpTOPAnG8L1dmw',
-    appId: '1:933102750137:android:de29324dc24fa60b6e0e68',
-    messagingSenderId: '933102750137',
-    projectId: 'first-haid',
-    storageBucket: 'first-haid.firebasestorage.app',
-  );
+  static FirebaseOptions get android => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY_ANDROID']!,
+        appId: '1:933102750137:android:de29324dc24fa60b6e0e68',
+        messagingSenderId: '933102750137',
+        projectId: 'first-haid',
+        storageBucket: 'first-haid.firebasestorage.app',
+      );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBf801thu9_XpYXgxNR-RRowAjeGCqf2Sw',
-    appId: '1:933102750137:ios:af751b80ee4c3edf6e0e68',
-    messagingSenderId: '933102750137',
-    projectId: 'first-haid',
-    storageBucket: 'first-haid.firebasestorage.app',
-    iosBundleId: 'com.dbn.firstHaid',
-  );
+  static FirebaseOptions get ios => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY_IOS']!,
+        appId: '1:933102750137:ios:af751b80ee4c3edf6e0e68',
+        messagingSenderId: '933102750137',
+        projectId: 'first-haid',
+        storageBucket: 'first-haid.firebasestorage.app',
+        iosBundleId: 'com.dbn.firstHaid',
+      );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBf801thu9_XpYXgxNR-RRowAjeGCqf2Sw',
-    appId: '1:933102750137:ios:af751b80ee4c3edf6e0e68',
-    messagingSenderId: '933102750137',
-    projectId: 'first-haid',
-    storageBucket: 'first-haid.firebasestorage.app',
-    iosBundleId: 'com.dbn.firstHaid',
-  );
+  static FirebaseOptions get macos => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY_MACOS']!,
+        appId: '1:933102750137:ios:af751b80ee4c3edf6e0e68',
+        messagingSenderId: '933102750137',
+        projectId: 'first-haid',
+        storageBucket: 'first-haid.firebasestorage.app',
+        iosBundleId: 'com.dbn.firstHaid',
+      );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB-g9u-KaaXd82CjaT8zDZ_hoSnnGdCef8',
-    appId: '1:933102750137:web:5a2106114b2a46916e0e68',
-    messagingSenderId: '933102750137',
-    projectId: 'first-haid',
-    authDomain: 'first-haid.firebaseapp.com',
-    storageBucket: 'first-haid.firebasestorage.app',
-  );
+  static FirebaseOptions get windows => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY_WINDOWS']!,
+        appId: '1:933102750137:web:5a2106114b2a46916e0e68',
+        messagingSenderId: '933102750137',
+        projectId: 'first-haid',
+        authDomain: 'first-haid.firebaseapp.com',
+        storageBucket: 'first-haid.firebasestorage.app',
+      );
 }
