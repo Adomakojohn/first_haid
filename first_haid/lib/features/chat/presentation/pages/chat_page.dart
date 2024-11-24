@@ -1,5 +1,6 @@
-import 'package:first_haid/features/chat/presentation/widgets/my_chat_bubble.dart';
+import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -9,13 +10,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<MyChatBubble> chatBubble = [
-    const MyChatBubble(textfieldMessage: 'Hello', isSender: true),
-    const MyChatBubble(
-        textfieldMessage: 'Hello, how can I help you today', isSender: false),
-    const MyChatBubble(
-        textfieldMessage: 'Hello, how can I help you today', isSender: false),
-  ];
+  final Gemini gemini = Gemini.instance;
+  List<ChatMessage> messages = [];
+  ChatUser currentUser = ChatUser(id: '0', firstName: "User");
+  ChatUser geminiUser = ChatUser(id: '1', firstName: "First-Haid");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,23 +25,52 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: 2,
-        itemBuilder: (context, index) {
-          return Column(
-            crossAxisAlignment:
-                chatBubble[1].isSender && chatBubble[0].isSender == false
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-            children: [
-              MyChatBubble(
-                textfieldMessage: chatBubble[0].textfieldMessage,
-                isSender: chatBubble[1].isSender,
-              ),
-            ],
-          );
-        },
-      ),
+      body: _buildUI(),
     );
+  }
+
+  Widget _buildUI() {
+    return DashChat(
+        currentUser: currentUser, onSend: _sendMessage, messages: messages);
+  }
+
+  void _sendMessage(ChatMessage chatMessage) {
+    setState(() {
+      messages = [chatMessage, ...messages];
+    });
+
+    try {
+      String question = chatMessage.text;
+      gemini.streamGenerateContent(question).listen(
+        (event) {
+          ChatMessage? lastMessage = messages.firstOrNull;
+          if (lastMessage != null && lastMessage.user == geminiUser) {
+            lastMessage = messages.removeAt(0);
+            String response = event.content?.parts?.fold(
+                    "", (previous, current) => "$previous ${current.text}") ??
+                "";
+            lastMessage.text += response;
+            setState(() {
+              messages = [lastMessage!, ...messages];
+            });
+          } else {
+            String response = event.content?.parts?.fold(
+                    "", (previous, current) => "$previous ${current.text}") ??
+                "";
+
+            ChatMessage message = ChatMessage(
+              user: geminiUser,
+              createdAt: DateTime.now(),
+              text: response,
+            );
+            setState(() {
+              messages = [message, ...messages];
+            });
+          }
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -43,9 +43,11 @@ dependencies:
   multi_masked_formatter: ^1.0.0
   google_generative_ai: ^0.4.6
   chat_bubbles: ^1.6.0
+ 
   flutter_dotenv: ^5.2.1
   shared_preferences: ^2.3.3
   flutter_gemini: ^2.0.5
+  dash_chat_2: ^0.0.21
  
 
 
