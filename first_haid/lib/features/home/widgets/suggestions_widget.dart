@@ -7,19 +7,19 @@ class SuggestionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 25),
+      padding: const EdgeInsets.only(left: 5, right: 6),
       child: Container(
         height: 30,
-        width: 120, // Width of each item
+        width: 120,
         decoration: BoxDecoration(
           color: Colors.grey.shade400,
-          borderRadius: BorderRadius.circular(50), // Oval shape
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Text(
             text,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
           ),

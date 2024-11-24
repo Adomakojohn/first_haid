@@ -16,8 +16,12 @@ class _DrawerPageState extends State<DrawerPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   void logout() async {
-    await authService.signOut();
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
+    try {
+      await authService.signOut();
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 
   @override

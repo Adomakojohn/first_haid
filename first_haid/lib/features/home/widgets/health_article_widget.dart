@@ -7,7 +7,7 @@ class HealthArticleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 215,
+      height: 225,
       alignment: Alignment.center,
       width: 290,
       decoration: const BoxDecoration(
@@ -18,8 +18,14 @@ class HealthArticleWidget extends StatelessWidget {
       ),
       child: GestureDetector(
           child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset('assets/images/bcImage.png'),
+          const Text("28th October 2024 || News Release"),
+          const Text(
+            "Breast Cancer Awareness",
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19),
+          ),
         ],
       )),
     );

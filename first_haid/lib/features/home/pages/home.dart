@@ -1,4 +1,3 @@
-import 'package:first_haid/core/routes/app_routes.dart';
 import 'package:first_haid/core/widgets/bot_container.dart';
 import 'package:first_haid/core/widgets/gradient_text.dart';
 import 'package:first_haid/features/authentication/data/auth_services.dart';
@@ -15,19 +14,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // GlobalKey for accessing Scaffold state
+  final List<SuggestionsWidget> suggestions = [
+    const SuggestionsWidget(text: "Breast cancer"),
+    const SuggestionsWidget(text: "Malaria"),
+    const SuggestionsWidget(text: "Headaches"),
+    const SuggestionsWidget(text: "Diarrhea"),
+    const SuggestionsWidget(text: "Stomach Aches"),
+    const SuggestionsWidget(text: "Colds and Flu"),
+  ];
+
+  final List<SuggestionsWidget> suggestionsTwo = [
+    const SuggestionsWidget(text: "Cholera"),
+    const SuggestionsWidget(text: "Hepatits A"),
+    const SuggestionsWidget(text: "HIV/AIDS"),
+    const SuggestionsWidget(text: "Diabetes"),
+    const SuggestionsWidget(text: "Tuberclosis"),
+    const SuggestionsWidget(text: "Heart Disease"),
+  ];
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AuthService authService = AuthService();
-
-  void logout() async {
-    await authService.signOut();
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey, // Assign the GlobalKey here
+      key: _scaffoldKey,
       drawer: const DrawerPage(),
       body: SafeArea(
         child: Padding(
@@ -90,35 +101,18 @@ class _HomePageState extends State<HomePage> {
                   height: 75,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 7, // Number of items in the list
+                    itemCount: suggestions.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 23),
-                            child: Container(
-                              height: 30,
-                              width: 120, // Width of each item
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius:
-                                    BorderRadius.circular(50), // Oval shape
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Breast Cancer',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            padding: const EdgeInsets.only(left: 28),
+                            child: suggestions[index],
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          const SuggestionsWidget(text: 'Headaches')
+                          suggestionsTwo[index],
                         ],
                       );
                     },
@@ -140,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 220,
+                  height: 235,
                   child: ListView.builder(
                     itemCount: 3,
                     scrollDirection: Axis.horizontal,

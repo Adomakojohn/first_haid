@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:first_haid/features/onboarding/onboard5.dart';
 import 'package:first_haid/features/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/routes/app_routes.dart';
 import '../../core/widgets/next_button.dart';
@@ -60,6 +63,7 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
       onboardFifthText: 'need it most',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -100,7 +104,7 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.42,
+            bottom: screenHeight * 0.452,
             left: 155,
             child: SmoothPageIndicator(
               onDotClicked: (index) {
@@ -125,7 +129,12 @@ class _OnboardingMainpageState extends State<OnboardingMainpage> {
             right: 20,
             child: onLastPage
                 ? NextButton(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setBool('hasSeenOnboarding', true);
+
+                      // Navigate to login or sign-up screen
                       Navigator.pushReplacementNamed(
                           context, AppRoutes.authrepository);
                     },
