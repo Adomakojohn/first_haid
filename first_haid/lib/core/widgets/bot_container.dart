@@ -1,9 +1,11 @@
 import 'package:first_haid/core/widgets/mytextfield.dart';
-import 'package:first_haid/features/chat/presentation/pages/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class BotContainer extends StatelessWidget {
-  const BotContainer({super.key});
+  final TextEditingController? controller;
+  final void Function()? onPressed;
+  const BotContainer(
+      {super.key, required this.controller, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class BotContainer extends StatelessWidget {
               child: SizedBox(
                 width: 250,
                 child: MyTextField(
+                  controller: controller,
                   borderRadius: BorderRadius.circular(16),
                   hintText: 'Ask me something',
                   obscureText: false,
@@ -59,13 +62,7 @@ class BotContainer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(17),
                 ),
                 child: IconButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const ChatPage();
-                      },
-                    ));
-                  },
+                  onPressed: onPressed,
                   icon: const Icon(Icons.send),
                 ),
               ),

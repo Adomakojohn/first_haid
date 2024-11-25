@@ -6,6 +6,9 @@ import 'package:first_haid/features/home/widgets/suggestions_widget.dart';
 import 'package:first_haid/features/home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
+import '../../chat/data/health_article_service.dart';
+import '../../chat/presentation/pages/chat_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -14,6 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<HealthArticle> articles = [];
+  final TextEditingController controller = TextEditingController();
   final List<SuggestionsWidget> suggestions = [
     const SuggestionsWidget(text: "Breast cancer"),
     const SuggestionsWidget(text: "Malaria"),
@@ -34,10 +39,45 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AuthService authService = AuthService();
+  NewsService newsService = NewsService(); 
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchArticles();
+  }
+
+  // Fetch health articles from the API
+  void fetchArticles() async {
+    final fetchedArticles = await newsService.fetchHealthArticles();
+    setState(() {
+    =
+      articles.clear();
+      articles.addAll(fetchedArticles.map((articleData) {
+        return HealthArticle(
+          title: articleData['title'],
+          description: articleData['description'] ?? '',
+          imageUrl: articleData['urlToImage'] ?? '',
+          publishedAt: articleData['publishedAt'],
+          content: articleData['content'] ?? '',
+          url: articleData['url'] ?? '',
+        );
+      }).toList());
+
+      // Limit articles to the first 5 valid ones
+      articles.retainWhere((article) =>
+          article.title.isNotEmpty &&
+          article.description.isNotEmpty &&
+          article.imageUrl.isNotEmpty);
+      articles.take(6); // Get only the first 5 articles
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       drawer: const DrawerPage(),
       body: SafeArea(
@@ -78,7 +118,27 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 30,
                 ),
-                const BotContainer(),
+                BotContainer(
+                  controller: controller,
+                  onPressed: () {
+                    if (controller.text.isNotEmpty) {
+                  
+                      final message = controller.text;
+
+                    
+                      controller.clear();
+
+                    
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return ChatPage(
+                            homeQuestion: message,
+                          );
+                        },
+                      ));
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -134,14 +194,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 235,
+                  height: 265,
                   child: ListView.builder(
-                    itemCount: 3,
                     scrollDirection: Axis.horizontal,
+                    itemCount: articles.length > 6 ? 6 : articles.length,
                     itemBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.all(6.0),
-                        child: HealthArticleWidget(),
+                      final article = articles[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: HealthArticleWidget(article: article),
                       );
                     },
                   ),
