@@ -46,9 +46,9 @@ class BotContainer extends StatelessWidget {
                 child: MyTextField(
                   controller: controller,
                   borderRadius: BorderRadius.circular(16),
-                  hintText: 'Ask me something',
+                  hintText: 'Type Here...',
                   obscureText: false,
-                  height: 55,
+                  height: 50,
                   textFieldName: '',
                 ),
               ),

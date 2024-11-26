@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/health_article_widget.dart'; // Assuming this file contains the HealthArticle model
+import '../widgets/health_article_widget.dart';
 
 class ArticleDetailPage extends StatefulWidget {
   final HealthArticle article;
 
-  const ArticleDetailPage({Key? key, required this.article}) : super(key: key);
+  const ArticleDetailPage({super.key, required this.article});
 
   @override
   State<ArticleDetailPage> createState() => _ArticleDetailPageState();
@@ -29,34 +29,28 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image of the article
               widget.article.imageUrl.isNotEmpty
                   ? Image.network(widget.article.imageUrl)
                   : Image.asset('assets/images/bcImage.png'),
               const SizedBox(height: 12),
-              // Title of the article
               Text(
                 widget.article.title,
                 style:
                     const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              // Published date
               Text(
                 'Published on: ${formatDate(widget.article.publishedAt)}',
                 style: const TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 12),
-              // Description content (truncated part)
               Text(
                 content,
                 style: const TextStyle(fontSize: 16, color: Colors.black87),
-                overflow:
-                    TextOverflow.ellipsis, // Handle overflow for long text
-                maxLines: 5, // Limit the number of lines shown
+                overflow: TextOverflow.ellipsis,
+                maxLines: 5,
               ),
               const SizedBox(height: 16),
-
               ElevatedButton(
                 onPressed: () async {
                   final Uri url = Uri.parse(widget.article.url);

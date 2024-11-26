@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class NewsService {
-  final String apiKey = '94ce925959dd490280055229bce4a93c';
+  final String apiKey = dotenv.env['HEALTH_ARTICLE_API_KEY']!;
   final String baseUrl = 'https://newsapi.org/v2/top-headlines';
   final String country = 'us';
   final String category = 'health';

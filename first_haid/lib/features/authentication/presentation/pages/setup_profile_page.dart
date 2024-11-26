@@ -1,7 +1,9 @@
 import 'package:first_haid/core/routes/app_routes.dart';
 import 'package:first_haid/core/widgets/mytextfield.dart';
 import 'package:first_haid/core/widgets/setup_profile_widget.dart';
+
 import 'package:multi_masked_formatter/multi_masked_formatter.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/gradient_text.dart';

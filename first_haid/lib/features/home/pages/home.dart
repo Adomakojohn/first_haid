@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AuthService authService = AuthService();
-  NewsService newsService = NewsService(); 
+  NewsService newsService = NewsService(); // Instance of NewsService
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   void fetchArticles() async {
     final fetchedArticles = await newsService.fetchHealthArticles();
     setState(() {
-    =
+    
       articles.clear();
       articles.addAll(fetchedArticles.map((articleData) {
         return HealthArticle(
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // Open the drawer using GlobalKey
+                       
                         _scaffoldKey.currentState?.openDrawer();
                       },
                       icon: Image.asset(
@@ -122,13 +122,12 @@ class _HomePageState extends State<HomePage> {
                   controller: controller,
                   onPressed: () {
                     if (controller.text.isNotEmpty) {
-                  
+                   
                       final message = controller.text;
 
-                    
+                  
                       controller.clear();
 
-                    
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return ChatPage(

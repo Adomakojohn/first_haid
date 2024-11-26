@@ -1,5 +1,6 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
+import 'package:first_haid/features/authentication/presentation/pages/setup_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'First Haid App',
-      // home: BottomNavBarPage(),
+      //home: SetupProfilePage(),
       initialRoute: hasSeenOnboarding!
           ? AppRoutes.authrepository
           : AppRoutes.onboardingmainpage,

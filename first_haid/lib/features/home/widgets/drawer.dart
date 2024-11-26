@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_haid/core/routes/app_routes.dart';
 import 'package:first_haid/features/authentication/data/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({super.key});
@@ -12,8 +14,22 @@ class DrawerPage extends StatefulWidget {
 
 class _DrawerPageState extends State<DrawerPage> {
   AuthService authService = AuthService();
-
   final user = FirebaseAuth.instance.currentUser!;
+
+  String? _profileImagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImagePath = prefs.getString('profile_image_path');
+    });
+  }
 
   void logout() async {
     try {
@@ -34,9 +50,12 @@ class _DrawerPageState extends State<DrawerPage> {
             decoration: const BoxDecoration(color: Colors.blue),
             accountName: const Text('User'),
             accountEmail: Text(user.email!),
-            currentAccountPicture: const CircleAvatar(
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: _profileImagePath != null
+                  ? FileImage(File(_profileImagePath!))
+                  : const AssetImage('assets/images/default-profile.png')
+                      as ImageProvider,
               backgroundColor: Colors.white,
-              child: Icon(Icons.person, color: Colors.blue),
             ),
           ),
           ListTile(
