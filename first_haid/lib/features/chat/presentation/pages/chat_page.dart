@@ -20,14 +20,13 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     if (widget.homeQuestion.isNotEmpty) {
-      // Create an initial ChatMessage with the homeQuestion
+      // allow users to send questions from home
       final initialMessage = ChatMessage(
         user: currentUser,
         createdAt: DateTime.now(),
         text: widget.homeQuestion,
       );
 
-      // Add the message to the chat and send it to the AI
       _sendMessage(initialMessage);
     }
   }
@@ -60,7 +59,6 @@ class _ChatPageState extends State<ChatPage> {
     try {
       String question = chatMessage.text;
 
-      // Ensure the Gemini response stream works as expected
       gemini.streamGenerateContent(question).listen(
         (event) {
           String response = event.content?.parts?.fold(
@@ -74,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
               messages.first.text += response;
             });
           } else {
-            // Otherwise, create a new message for the AI's response
+            //create a new message for the AI's response
             setState(() {
               messages = [
                 ChatMessage(
@@ -88,12 +86,10 @@ class _ChatPageState extends State<ChatPage> {
           }
         },
         onError: (error) {
-          // Handle stream errors gracefully
           print("Error in AI response stream: $error");
         },
       );
     } catch (e) {
-      // Handle any other errors during message sending
       print("Error sending message: $e");
     }
   }
