@@ -1,6 +1,7 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:hive/hive.dart';
 
 class ChatPage extends StatefulWidget {
   final String homeQuestion;
@@ -15,12 +16,21 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> messages = [];
   ChatUser currentUser = ChatUser(id: '0', firstName: "User");
   ChatUser geminiUser = ChatUser(id: '1', firstName: "First-Haid");
+  late Box<Map> chatBox;
 
   @override
   void initState() {
     super.initState();
+    _initializeHive();
+  }
+
+  Future<void> _initializeHive() async {
+    // Open the Hive box for chat messages
+    chatBox = await Hive.openBox<Map>('chatMessages');
+
+    _loadCachedMessages();
+
     if (widget.homeQuestion.isNotEmpty) {
-      // allow users to send questions from home
       final initialMessage = ChatMessage(
         user: currentUser,
         createdAt: DateTime.now(),
@@ -29,6 +39,21 @@ class _ChatPageState extends State<ChatPage> {
 
       _sendMessage(initialMessage);
     }
+  }
+
+  void _loadCachedMessages() {
+    final cachedMessages = chatBox.values.map((messageData) {
+      return ChatMessage(
+        user:
+            messageData['userId'] == currentUser.id ? currentUser : geminiUser,
+        createdAt: DateTime.parse(messageData['createdAt']),
+        text: messageData['text'],
+      );
+    }).toList();
+
+    setState(() {
+      messages = cachedMessages.reversed.toList();
+    });
   }
 
   @override
@@ -48,7 +73,10 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildUI() {
     return DashChat(
-        currentUser: currentUser, onSend: _sendMessage, messages: messages);
+      currentUser: currentUser,
+      onSend: _sendMessage,
+      messages: messages,
+    );
   }
 
   void _sendMessage(ChatMessage chatMessage) {
@@ -56,32 +84,51 @@ class _ChatPageState extends State<ChatPage> {
       messages = [chatMessage, ...messages];
     });
 
+    // Save the user's message to Hive
+    chatBox.add({
+      'userId': chatMessage.user.id,
+      'text': chatMessage.text,
+      'createdAt': chatMessage.createdAt.toIso8601String(),
+    });
+
     try {
       String question = chatMessage.text;
 
       gemini.streamGenerateContent(question).listen(
         (event) {
-          String response = event.content?.parts?.fold(
+          String responseChunk = event.content?.parts?.fold(
                   "", (previous, current) => "$previous ${current.text}") ??
               "";
 
-          // Check if the last message is from the AI (geminiUser)
           if (messages.isNotEmpty && messages.first.user == geminiUser) {
-            // If the last message is from the AI, append to its text
             setState(() {
-              messages.first.text += response;
+              messages.first.text += responseChunk;
+            });
+
+            // Update the existing AI response in Hive
+            int indexToUpdate = chatBox.keys.last;
+            chatBox.put(indexToUpdate, {
+              'userId': geminiUser.id,
+              'text': messages.first.text,
+              'createdAt': messages.first.createdAt.toIso8601String(),
             });
           } else {
-            //create a new message for the AI's response
+            // Create a new AI response message for the first chunk
+            final responseMessage = ChatMessage(
+              user: geminiUser,
+              createdAt: DateTime.now(),
+              text: responseChunk,
+            );
+
             setState(() {
-              messages = [
-                ChatMessage(
-                  user: geminiUser,
-                  createdAt: DateTime.now(),
-                  text: response,
-                ),
-                ...messages,
-              ];
+              messages = [responseMessage, ...messages];
+            });
+
+            // Save the new AI response to Hive
+            chatBox.add({
+              'userId': geminiUser.id,
+              'text': responseMessage.text,
+              'createdAt': responseMessage.createdAt.toIso8601String(),
             });
           }
         },

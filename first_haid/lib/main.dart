@@ -23,6 +23,7 @@ Future<void> main() async {
 
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(CachedMessagesAdapter());
 
   await Hive.openBox<CachedMessages>('messages');
 
