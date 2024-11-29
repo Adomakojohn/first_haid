@@ -50,28 +50,34 @@ class _HomePageState extends State<HomePage> {
 
   // Fetch health articles from the API
   void fetchArticles() async {
-    final fetchedArticles = await newsService.fetchHealthArticles();
-    setState(() {
-    
-      articles.clear();
-      articles.addAll(fetchedArticles.map((articleData) {
-        return HealthArticle(
-          title: articleData['title'],
-          description: articleData['description'] ?? '',
-          imageUrl: articleData['urlToImage'] ?? '',
-          publishedAt: articleData['publishedAt'],
-          content: articleData['content'] ?? '',
-          url: articleData['url'] ?? '',
-        );
-      }).toList());
+    try {
+      final fetchedArticles = await newsService.fetchHealthArticles();
 
-      // Limit articles to the first 5 valid ones
-      articles.retainWhere((article) =>
-          article.title.isNotEmpty &&
-          article.description.isNotEmpty &&
-          article.imageUrl.isNotEmpty);
-      articles.take(6); // Get only the first 5 articles
-    });
+      if (!mounted) return; // Ensure the widget is still in the tree.
+
+      setState(() {
+        articles.clear();
+        articles.addAll(fetchedArticles.map((articleData) {
+          return HealthArticle(
+            title: articleData['title'],
+            description: articleData['description'] ?? '',
+            imageUrl: articleData['urlToImage'] ?? '',
+            publishedAt: articleData['publishedAt'],
+            content: articleData['content'] ?? '',
+            url: articleData['url'] ?? '',
+          );
+        }).toList());
+
+        // Limit articles to the first 6 valid ones
+        articles.retainWhere((article) =>
+            article.title.isNotEmpty &&
+            article.description.isNotEmpty &&
+            article.imageUrl.isNotEmpty);
+      });
+    } catch (e) {
+      // Handle the error gracefully (optional)
+      print('Error fetching articles: $e');
+    }
   }
 
   @override
@@ -92,7 +98,6 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                       
                         _scaffoldKey.currentState?.openDrawer();
                       },
                       icon: Image.asset(
@@ -122,10 +127,8 @@ class _HomePageState extends State<HomePage> {
                   controller: controller,
                   onPressed: () {
                     if (controller.text.isNotEmpty) {
-                   
                       final message = controller.text;
 
-                  
                       controller.clear();
 
                       Navigator.push(context, MaterialPageRoute(

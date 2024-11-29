@@ -11,6 +11,7 @@ class MyTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final double? height;
   final List<TextInputFormatter>? inputFormatters;
+  final Color borderColor; // Added for dynamic border color
 
   const MyTextField({
     this.height,
@@ -23,6 +24,7 @@ class MyTextField extends StatelessWidget {
     this.suffixIcon,
     this.controller,
     this.textFieldName,
+    this.borderColor = Colors.grey, // Default color is grey
   });
 
   @override
@@ -58,9 +60,11 @@ class MyTextField extends StatelessWidget {
               ),
               filled: true,
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none, borderRadius: borderRadius),
+                borderSide: BorderSide(color: borderColor, width: 1),
+                borderRadius: borderRadius,
+              ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(color: borderColor, width: 1),
                 borderRadius: borderRadius,
               ),
             ),
