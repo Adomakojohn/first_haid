@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AuthService authService = AuthService();
-  NewsService newsService = NewsService(); // Instance of NewsService
+  NewsService newsService = NewsService();
 
   @override
   void initState() {

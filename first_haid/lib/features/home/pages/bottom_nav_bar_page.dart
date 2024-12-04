@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
-
   @override
   State<BottomNavBarPage> createState() => _BottomNavBarPageState();
 }
@@ -17,8 +16,8 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   final List _pages = [
     const HomePage(),
     const HealthPage(),
-    const ProfilePage(),
     const HospitalsPage(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

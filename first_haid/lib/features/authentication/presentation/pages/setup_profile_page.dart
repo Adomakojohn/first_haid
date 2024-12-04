@@ -10,7 +10,8 @@ import '../../../../core/widgets/gradient_text.dart';
 // Class to save user details
 class AddUserDetails {
   Future<void> addUserDetails({
-    required String fullName,
+    required String firstName,
+    required String lastName,
     required String dateOfBirth,
     required String gender,
     required String medicalAllergies,
@@ -23,7 +24,8 @@ class AddUserDetails {
 
     try {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'fullName': fullName,
+        'firstName': firstName,
+        'lastName': lastName,
         'dateOfBirth': dateOfBirth,
         'email': user.email,
         'gender': gender,
@@ -44,13 +46,15 @@ class SetupProfilePage extends StatefulWidget {
 
 class _SetupProfilePageState extends State<SetupProfilePage> {
   // Controllers for each input field
-  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _allergiesController = TextEditingController();
 
   // Error state variables
-  bool _fullNameError = false;
+  bool _firstNameError = false;
+  bool _lastNameError = false;
   bool _dobError = false;
   bool _genderError = false;
   bool _allergiesError = false;
@@ -59,7 +63,8 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
   Future<void> _saveProfileDetails() async {
     try {
       await AddUserDetails().addUserDetails(
-        fullName: _fullNameController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
         dateOfBirth: _dobController.text,
         gender: _genderController.text,
         medicalAllergies: _allergiesController.text,
@@ -127,23 +132,53 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   letterSpacing: -0.24,
                 ),
               ),
-              SizedBox(
-                width: screenWidth * 0.9,
-                child: MyTextField(
-                  controller: _fullNameController,
-                  height: 50,
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  hintText: '',
-                  obscureText: false,
-                  textFieldName: 'Full Name',
-                  borderColor: _fullNameError ? Colors.red : Colors.grey,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: screenWidth * 0.42,
+                    child: MyTextField(
+                      controller: _firstNameController,
+                      height: 50,
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      hintText: '',
+                      obscureText: false,
+                      textFieldName: 'First Name',
+                      borderColor: _firstNameError ? Colors.red : Colors.grey,
+                    ),
+                  ),
+                  SizedBox(
+                    width: screenWidth * 0.05,
+                  ),
+                  SizedBox(
+                    width: screenWidth * 0.41,
+                    child: MyTextField(
+                      controller: _lastNameController,
+                      height: 50,
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      hintText: '',
+                      obscureText: false,
+                      textFieldName: 'Last Name',
+                      borderColor: _lastNameError ? Colors.red : Colors.grey,
+                    ),
+                  ),
+                ],
               ),
-              if (_fullNameError)
-                const Text(
-                  'Full name is required',
-                  style: TextStyle(color: Colors.red, fontSize: 12),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (_firstNameError)
+                    const Text(
+                      'First name is required',
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  if (_lastNameError)
+                    const Text(
+                      'last name is required',
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                ],
+              ),
               SizedBox(
                 width: screenWidth * 0.9,
                 child: MyTextField(
@@ -218,13 +253,15 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        _fullNameError = _fullNameController.text.isEmpty;
+                        _firstNameError = _firstNameController.text.isEmpty;
+                        _lastNameError = _lastNameController.text.isEmpty;
                         _dobError = _dobController.text.isEmpty;
                         _genderError = _genderController.text.isEmpty;
                         _allergiesError = _allergiesController.text.isEmpty;
                       });
 
-                      if (!_fullNameError &&
+                      if (!_firstNameError &&
+                          !_lastNameError &&
                           !_dobError &&
                           !_genderError &&
                           !_allergiesError) {

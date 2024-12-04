@@ -29,10 +29,17 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> _initializeHive() async {
-    // Open Hive box for chat messages
+    // Open the Hive box for chat messages
     chatBox = await Hive.openBox<Map>('chatMessages');
 
-    _loadCachedMessages();
+    // Clear previous messages when a new user logs in
+    _clearChatMessages();
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Load messages from Firestore if the user is logged in
+      await _loadMessagesFromFirestore(user);
+    }
 
     if (widget.homeQuestion.isNotEmpty) {
       final initialMessage = ChatMessage(
@@ -46,42 +53,48 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _clearChatMessages() async {
-    // Clear Hive
     await chatBox.clear();
-
-    // Clear Firestore
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final conversationsRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection('conversations');
-
-      final snapshots = await conversationsRef.get();
-      for (var doc in snapshots.docs) {
-        await doc.reference.delete();
-      }
-    }
-
-    // Clear local messages list
     setState(() {
       messages = [];
     });
   }
 
-  void _loadCachedMessages() {
-    final cachedMessages = chatBox.values.map((messageData) {
-      return ChatMessage(
-        user:
-            messageData['userId'] == currentUser.id ? currentUser : geminiUser,
-        createdAt: DateTime.parse(messageData['createdAt']),
-        text: messageData['text'],
-      );
-    }).toList();
+  Future<void> _loadMessagesFromFirestore(User user) async {
+    try {
+      final messagesSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('conversations')
+          .orderBy('createdAt', descending: true)
+          .get();
 
-    setState(() {
-      messages = cachedMessages.reversed.toList();
-    });
+      if (messagesSnapshot.docs.isEmpty) return;
+
+      final loadedMessages = messagesSnapshot.docs.map((doc) {
+        return ChatMessage(
+          user: doc['userId'] == currentUser.id ? currentUser : geminiUser,
+          createdAt: DateTime.parse(doc['createdAt']),
+          text: doc['text'],
+        );
+      }).toList();
+
+      setState(() {
+        messages = loadedMessages;
+      });
+
+      // Save the loaded messages into Hive
+      for (var message in loadedMessages) {
+        chatBox.add({
+          'userId': message.user.id,
+          'text': message.text,
+          'createdAt': message.createdAt.toIso8601String(),
+        });
+      }
+
+      print("Messages loaded from Firestore.");
+    } catch (e) {
+      print("Error loading messages from Firestore: $e");
+    }
   }
 
   void _confirmClearChatMessages() {

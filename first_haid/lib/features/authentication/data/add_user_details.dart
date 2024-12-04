@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AddUserDetails {
   Future<void> addUserDetails({
-    required String fullName,
+    required String firstName,
+    required String lastName,
     required String dateOfBirth,
     required String gender,
     required String medicalAllergies,
@@ -16,7 +17,8 @@ class AddUserDetails {
 
     try {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'fullName': fullName,
+        'firstName': firstName,
+        'lastName': lastName,
         'dateOfBirth': dateOfBirth,
         'email': user.email,
         'gender': gender,
