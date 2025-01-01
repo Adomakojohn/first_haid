@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+//new fixes
 class _HomePageState extends State<HomePage> {
   final List<HealthArticle> articles = [];
   final TextEditingController controller = TextEditingController();
