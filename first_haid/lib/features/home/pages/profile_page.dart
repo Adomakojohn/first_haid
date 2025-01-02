@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.center,
               height: screenHeight * 0.25,
               width: 300,
-              // child: const SetupProfileWidget(),
+              child: const SetupProfileWidget(),
             ),
           ],
         ),
