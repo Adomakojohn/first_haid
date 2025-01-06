@@ -17,7 +17,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     const HomePage(),
     const HealthPage(),
     const HospitalsPage(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
